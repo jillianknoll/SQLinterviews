@@ -19,5 +19,5 @@ For example
 ```create database restaurant_db;
    create database transactions; ```
 
-
+Now exit 
 
