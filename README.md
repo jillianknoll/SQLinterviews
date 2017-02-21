@@ -34,5 +34,5 @@ Now you've entered the psql commmand line tool and should see a prompt starting 
 
 Type ```select * from customers;``` You should see the contents of this table printed to the terminal. Now you're ready to start querying!
 
-**And remember, control+C does not work to exit the psql command line tool in the terminal, you must type ```\quit`` or close the terminal window.
+**And remember, control+C does not work to exit the psql command line tool in the terminal, you must type ``\quit`` or close the terminal window.
 
