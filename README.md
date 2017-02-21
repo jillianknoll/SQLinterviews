@@ -25,8 +25,9 @@ Now exit the Postgres command line tool by typing ``` \quit ```
 
 To add the "dump" files to your empty databases use the following commands
 
-```psql restaurant_db < restaurant_db.sql   
-   psql transactions < transact.txt ```
+```psql restaurant_db < restaurant_db.sql   ```
+
+```psql transactions < transact.txt ```
    
 You should see a list of commmands flash over the terminal. This means that the data was added.
 
