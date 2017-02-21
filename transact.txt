@@ -1,0 +1,334 @@
+--
+-- PostgreSQL database dump
+--
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+
+--
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+SET search_path = public, pg_catalog;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- Name: clients; Type: TABLE; Schema: public; Owner: jillian; Tablespace: 
+--
+
+CREATE TABLE clients (
+    client_id integer NOT NULL,
+    client_name character varying(40) NOT NULL
+);
+
+
+
+--
+-- Name: clients_client_id_seq; Type: SEQUENCE; Schema: public; Owner: jillian
+--
+
+CREATE SEQUENCE clients_client_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+--
+-- Name: clients_client_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jillian
+--
+
+ALTER SEQUENCE clients_client_id_seq OWNED BY clients.client_id;
+
+
+--
+-- Name: customers; Type: TABLE; Schema: public; Owner: jillian; Tablespace: 
+--
+
+CREATE TABLE customers (
+    customer_id integer NOT NULL,
+    customer_name character varying(40) NOT NULL,
+    birthdate timestamp without time zone NOT NULL
+);
+
+
+
+--
+-- Name: customers_customer_id_seq; Type: SEQUENCE; Schema: public; Owner: jillian
+--
+
+CREATE SEQUENCE customers_customer_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: customers_customer_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jillian
+--
+
+ALTER SEQUENCE customers_customer_id_seq OWNED BY customers.customer_id;
+
+
+--
+-- Name: transaction_fraud; Type: TABLE; Schema: public; Owner: jillian; Tablespace: 
+--
+
+CREATE TABLE transaction_fraud (
+    transaction_id integer NOT NULL,
+    fraud_level integer NOT NULL
+);
+
+
+
+--
+-- Name: transaction_fraud_transaction_id_seq; Type: SEQUENCE; Schema: public; Owner: jillian
+--
+
+CREATE SEQUENCE transaction_fraud_transaction_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+--
+-- Name: transaction_fraud_transaction_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jillian
+--
+
+ALTER SEQUENCE transaction_fraud_transaction_id_seq OWNED BY transaction_fraud.transaction_id;
+
+
+--
+-- Name: transaction_history; Type: TABLE; Schema: public; Owner: jillian; Tablespace: 
+--
+
+CREATE TABLE transaction_history (
+    transaction_id integer NOT NULL,
+    customer_id integer,
+    date timestamp without time zone NOT NULL,
+    client_id integer NOT NULL,
+    amount double precision NOT NULL
+);
+
+
+--
+-- Name: transaction_history_transaction_id_seq; Type: SEQUENCE; Schema: public; Owner: jillian
+--
+
+CREATE SEQUENCE transaction_history_transaction_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+
+--
+-- Name: transaction_history_transaction_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jillian
+--
+
+ALTER SEQUENCE transaction_history_transaction_id_seq OWNED BY transaction_history.transaction_id;
+
+
+--
+-- Name: client_id; Type: DEFAULT; Schema: public; Owner: jillian
+--
+
+ALTER TABLE ONLY clients ALTER COLUMN client_id SET DEFAULT nextval('clients_client_id_seq'::regclass);
+
+
+--
+-- Name: customer_id; Type: DEFAULT; Schema: public; Owner: jillian
+--
+
+ALTER TABLE ONLY customers ALTER COLUMN customer_id SET DEFAULT nextval('customers_customer_id_seq'::regclass);
+
+
+--
+-- Name: transaction_id; Type: DEFAULT; Schema: public; Owner: jillian
+--
+
+ALTER TABLE ONLY transaction_fraud ALTER COLUMN transaction_id SET DEFAULT nextval('transaction_fraud_transaction_id_seq'::regclass);
+
+
+--
+-- Name: transaction_id; Type: DEFAULT; Schema: public; Owner: jillian
+--
+
+ALTER TABLE ONLY transaction_history ALTER COLUMN transaction_id SET DEFAULT nextval('transaction_history_transaction_id_seq'::regclass);
+
+
+--
+-- Data for Name: clients; Type: TABLE DATA; Schema: public; Owner: jillian
+--
+
+COPY clients (client_id, client_name) FROM stdin;
+1	Amazon
+4	Apple
+2	Jet
+3	Lyft
+\.
+
+
+--
+-- Name: clients_client_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jillian
+--
+
+SELECT pg_catalog.setval('clients_client_id_seq', 1, false);
+
+
+--
+-- Data for Name: customers; Type: TABLE DATA; Schema: public; Owner: jillian
+--
+
+COPY customers (customer_id, customer_name, birthdate) FROM stdin;
+1	A	1990-10-01 00:00:00
+2	B	1987-06-01 00:00:00
+3	C	1996-12-10 00:00:00
+4	D	1992-08-02 00:00:00
+5	E	1995-07-05 00:00:00
+\.
+
+
+--
+-- Name: customers_customer_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jillian
+--
+
+SELECT pg_catalog.setval('customers_customer_id_seq', 1, false);
+
+
+--
+-- Data for Name: transaction_fraud; Type: TABLE DATA; Schema: public; Owner: jillian
+--
+
+COPY transaction_fraud (transaction_id, fraud_level) FROM stdin;
+1	5
+2	3
+3	1
+4	9
+5	10
+6	2
+7	3
+8	9
+9	4
+10	7
+11	1
+\.
+
+
+--
+-- Name: transaction_fraud_transaction_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jillian
+--
+
+SELECT pg_catalog.setval('transaction_fraud_transaction_id_seq', 1, false);
+
+
+--
+-- Data for Name: transaction_history; Type: TABLE DATA; Schema: public; Owner: jillian
+--
+
+COPY transaction_history (transaction_id, customer_id, date, client_id, amount) FROM stdin;
+1	1	2017-01-02 00:00:00	2	100.5
+2	2	2017-01-04 00:00:00	1	1.98999999999999999
+3	3	2017-01-04 00:00:00	2	7.83000000000000007
+4	4	2017-01-09 00:00:00	3	158.300000000000011
+5	5	2017-01-09 00:00:00	1	97.5600000000000023
+6	3	2017-01-09 00:00:00	2	63.4500000000000028
+7	4	2017-01-09 00:00:00	3	43.2100000000000009
+8	5	2017-01-10 00:00:00	4	37.3200000000000003
+9	5	2017-01-09 00:00:00	4	33.4600000000000009
+10	4	2017-01-11 00:00:00	3	250.72999999999999
+11	5	2017-01-08 00:00:00	2	1000.60000000000002
+\.
+
+
+--
+-- Name: transaction_history_transaction_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jillian
+--
+
+SELECT pg_catalog.setval('transaction_history_transaction_id_seq', 1, false);
+
+
+--
+-- Name: clients_pkey; Type: CONSTRAINT; Schema: public; Owner: jillian; Tablespace: 
+--
+
+ALTER TABLE ONLY clients
+    ADD CONSTRAINT clients_pkey PRIMARY KEY (client_id);
+
+
+--
+-- Name: customers_pkey; Type: CONSTRAINT; Schema: public; Owner: jillian; Tablespace: 
+--
+
+ALTER TABLE ONLY customers
+    ADD CONSTRAINT customers_pkey PRIMARY KEY (customer_id);
+
+
+--
+-- Name: transaction_fraud_pkey; Type: CONSTRAINT; Schema: public; Owner: jillian; Tablespace: 
+--
+
+ALTER TABLE ONLY transaction_fraud
+    ADD CONSTRAINT transaction_fraud_pkey PRIMARY KEY (transaction_id);
+
+
+--
+-- Name: transaction_history_pkey; Type: CONSTRAINT; Schema: public; Owner: jillian; Tablespace: 
+--
+
+ALTER TABLE ONLY transaction_history
+    ADD CONSTRAINT transaction_history_pkey PRIMARY KEY (transaction_id);
+
+
+--
+-- Name: transaction_fraud_transaction_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jillian
+--
+
+ALTER TABLE ONLY transaction_fraud
+    ADD CONSTRAINT transaction_fraud_transaction_id_fkey FOREIGN KEY (transaction_id) REFERENCES transaction_history(transaction_id);
+
+
+--
+-- Name: transaction_history_customer_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jillian
+--
+
+ALTER TABLE ONLY transaction_history
+    ADD CONSTRAINT transaction_history_customer_id_fkey FOREIGN KEY (customer_id) REFERENCES customers(customer_id);
+
+
+--
+-- Name: public; Type: ACL; Schema: -; Owner: jillian
+--
+
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+REVOKE ALL ON SCHEMA public FROM jillian;
+--GRANT ALL ON SCHEMA public TO jillian;
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+--
+-- PostgreSQL database dump complete
+--
+
