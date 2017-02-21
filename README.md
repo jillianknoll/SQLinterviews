@@ -17,8 +17,9 @@ Type ```create database <db_name>;``` to create a new database for each Postgres
 
 For example 
 
-```create database restaurant_db;
-   create database transactions; ```
+```create database restaurant_db; ```
+
+```create database transactions; ```
 
 Now exit the Postgres command line tool by typing ``` \quit ```
 
