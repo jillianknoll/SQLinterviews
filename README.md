@@ -19,5 +19,20 @@ For example
 ```create database restaurant_db;
    create database transactions; ```
 
-Now exit 
+Now exit the Postgres command line tool by typing ``` \quit ```
+
+To add the "dump" files to your empty databases use the following commands
+```psql restaurant_db < restaurant_db.sql   
+   psql transactions < transact.txt ```
+   
+You should see a list of commmands flash over the terminal. This means that the data was added.
+
+Now try to do a simple select statement to access your data
+
+```psql transactions ```
+Now you've entered the psql commmand line tool and should see a prompt starting with "transactions=#"
+
+Type ```select * from customers;``` You should see the contents of this table printed to the terminal. Now you're ready to start querying!
+
+**And remember, control+C does not work to exit the psql command line tool in the terminal, you must type ```\quit`` or close the terminal window.
 
