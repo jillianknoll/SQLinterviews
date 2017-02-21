@@ -13,7 +13,7 @@ Open the terminal.
 
 Type ```psql``` to enter the postgresql command line tool.
 
-Type ```create database <db_name>;``` to create a new database for each Postgres "dump" file (restaurant_db.sql and transact.txt)
+Type ```create database <db_name>;``` to create a new database that will be loaded from each data file (restaurant_db.sql and transact.txt)
 
 For example 
 
